@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalles del Producto</title>
+  <link rel="stylesheet" href="estilo.css">
+  <link rel="website icon" type="png" href="fotos/logons.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>Detalles del Producto</h1>
+    <nav class="nav-iconos">
+      <a href="index.html"><i class="fas fa-home"></i><span class="tooltip">Inicio</span></a>
+      <a href="carrito.html"><i class="fas fa-shopping-cart"></i><span class="tooltip">Carrito</span></a>
+      <a href="#"><i class="fas fa-envelope"></i><span class="tooltip">Contacto</span></a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="detalle-producto">
+      <img src="sinfnd/PRS/PRS C.png" alt="Producto 1">
+      <h2 id="nombreProducto">GUITARRA PRS C 24 Standard</h2>
+      <p><strong>Precio:</strong> $12900</p>
+      <p><strong>Descripción:</strong> Disfruta de la conexión con la música con la guitarra PRS SE STANDARD. 
+        Con este instrumento descubrirás nuevos acordes, cantarás tus canciones y disfrutarás de la vida musical. 
+        Explora, amplifica tu creatividad y desarrolla tu pasión. <br>
+        Hecho de caoba con acabado satinado. <br>
+        Con 6 cuerdas. <br>
+        La longitud de la escala es de 25 pulgadas. <br>
+        Sonidos fuertes y firmes con estilo propio. <br>
+      </p>
+      <p id="stockDisponible"><strong>Unidades:</strong> ...</p>
+
+      <div class="cantidad-selector">
+        <label for="cantidad">UNIDADES:</label>
+        <div class="cantidad-controles">
+          <button type="button" onclick="cambiarCantidad(-1)">−</button>
+          <input type="number" id="cantidad" value="1" min="1">
+          <button type="button" onclick="cambiarCantidad(1)">+</button>
+        </div>
+      </div>
+      
+      <div class="carrusel">
+        <img src="sinfnd/PRS/PRS C.png" alt="Rojo" class="slide activo" data-color="Madera degradada">
+        <img src="sinfnd/PRS/PRS.png" alt="Azul" class="slide" data-color="Madera oscura">
+        <img src="sinfnd/PRS/PRS6.png" alt="naranja" class="slide" data-color="Azul pantano">
+        <img src="sinfnd/PRS/PRS7.png" alt="Verde" class="slide" data-color="Gris pálido">
+
+        <button class="anterior">&#10094;</button>
+        <button class="siguiente">&#10095;</button>
+      </div>
+
+      <button id="agregarCarrito" class="agregar-carrito-boton">Agregar al carrito</button> 
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; Noble Sound. Tu historia comienza con una cuerda.</p>
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const cantidadInput = document.getElementById('cantidad');
+    const stockDisponible = document.getElementById('stockDisponible');
+    const nombreProducto = document.getElementById('nombreProducto').textContent;
+    let index = 0;
+
+    let stock = JSON.parse(localStorage.getItem('stock')) || {};
+
+    function obtenerClave() {
+      const color = slides[index].getAttribute('data-color');
+      return `${nombreProducto}-${color}`;
+    }
+
+    function actualizarStockMostrado() {
+      const clave = obtenerClave();
+      const disponibles = stock[clave] ?? 8;
+      stockDisponible.innerHTML = `<strong>Disponibles:</strong> ${disponibles}`;
+      cantidadInput.max = disponibles;
+    }
+
+    function mostrarSlide(nuevoIndex) {
+      slides[index].classList.remove('activo');
+      index = (nuevoIndex + slides.length) % slides.length;
+      slides[index].classList.add('activo');
+      actualizarStockMostrado();
+    }
+
+    document.querySelector('.anterior').addEventListener('click', () => {
+      mostrarSlide(index - 1);
+    });
+
+    document.querySelector('.siguiente').addEventListener('click', () => {
+      mostrarSlide(index + 1);
+    });
+
+    function cambiarCantidad(valor) {
+  const max = parseInt(cantidadInput.max) || 8;
+  let actual = parseInt(cantidadInput.value);
+  actual += valor;
+  if (actual < 1) actual = 1;
+  if (actual > max) actual = max;
+  cantidadInput.value = actual;
+}
+
+    document.getElementById('agregarCarrito').addEventListener('click', () => {
+      const color = slides[index].getAttribute('data-color');
+      const cantidad = parseInt(cantidadInput.value);
+      const clave = `${nombreProducto}-${color}`;
+      const disponibles = stock[clave] ?? 8;
+
+      if (cantidad > disponibles) {
+        alert(`Solo hay ${disponibles} unidades disponibles.`);
+        return;
+      }
+
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+      const productoExistente = carrito.find(p => p.nombre === nombreProducto && p.color === color);
+      if (productoExistente) {
+        productoExistente.cantidad = (parseInt(productoExistente.cantidad) || 0) + cantidad;
+      } else {
+        carrito.push({
+          nombre: nombreProducto,
+          color: color,
+          precio: 10000,
+          imagen: slides[index].src,
+          cantidad: cantidad,
+          disponibles: disponibles
+        });
+      }
+
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      alert(`Se agregaron ${cantidad} unidad(es) del producto en color ${color} al carrito.`);
+    });
+
+    // Inicializar
+    actualizarStockMostrado();
+  </script>
+</body>
+</html>

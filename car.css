@@ -1,0 +1,192 @@
+body {
+    background-color: #5f5f5f;
+    margin: 0;
+    padding: 2rem;
+  }
+
+  h1 {
+    text-align: center;
+    color: #333;
+    font-family: 'Elephant';
+  }
+
+  .carrito {
+    max-width: 800px;
+    margin: 2rem auto;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.877);
+  }
+
+  .producto {
+    border-bottom: 1px solid #ccc;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .producto img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+  }
+
+  .botones {
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .botones button,
+  .botones a {
+    margin: 0.5rem;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .botones button:hover,
+  .botones a:hover {
+    background-color: #555;
+  }
+
+  .vacio {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+  }
+
+  .eliminar-producto {
+  background-color: #a72828;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.eliminar-producto:hover {
+  background-color: #e41616;
+}
+
+form#formularioUsuario {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+form#formularioUsuario h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form#formularioUsuario label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #444;
+}
+
+form#formularioUsuario input,
+form#formularioUsuario select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+form#formularioUsuario input:focus,
+form#formularioUsuario select:focus {
+  outline: none;
+  border-color: #777;
+  box-shadow: 0 0 4px #777;
+}
+form#formulario-compra {
+  max-width: 800px;
+  margin: 2rem auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+form#formulario-compra label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+form#formulario-compra input[type="text"],
+form#formulario-compra input[type="tel"],
+form#formulario-compra select,
+form#formulario-compra textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+form#formulario-compra input[type="text"]:focus,
+form#formulario-compra input[type="tel"]:focus,
+form#formulario-compra select:focus,
+form#formulario-compra textarea:focus {
+  border-color: #333;
+  outline: none;
+}
+
+#info-tarjeta {
+  background-color: #f9f9f9;
+  border: 1px solid #bbb;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+  color: #444;
+}
+
+form#formulario-compra button[type="submit"] {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+form#formulario-compra button[type="submit"]:hover {
+  background-color: #555;
+}
+
+form#formulario-compra button[type="submit"]:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}

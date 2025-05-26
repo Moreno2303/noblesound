@@ -1,0 +1,242 @@
+/*general */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #3f1919;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+
+  }
+  
+ 
+  header {
+    background-color: #5E1F1F;
+    color: rgb(8, 8, 8);
+    padding: 0;
+    text-align: center;
+    font-family: 'Elephant';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  header nav a {
+    color: #ffd700;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+  }
+  
+  
+  /* Sección de detalle del producto */
+  .detalle-producto {
+    max-width: 800px;
+    margin: 2rem auto;
+    background-color: rgb(117, 75, 75);
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(202, 147, 186, 0.774);
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .detalle-producto img {
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .detalle-producto h2 {
+    margin-top: 0;
+    color: #ffffff;
+  }
+  
+  .detalle-producto p {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin: 1rem 0;
+  }
+  
+  
+  header nav a:hover {
+    text-decoration: underline;
+  }
+  
+ 
+  footer {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    background-color: #000000;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+  }
+
+/***************************************************************************/
+.carrusel {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.774);
+  padding: 1rem 0; /*para espacio arriba y abajo */
+  background-color: #683c3c;
+  border-radius: 10px;
+  height: 400px;
+}
+
+.slide {
+  display: none;
+  max-width: 100%;
+  max-height: 400px; /* Limita altura máxima */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  
+}
+
+.slide.activo {
+  display: block;
+}
+
+.anterior,
+.siguiente {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.5);
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 25%;
+  font-size: 24px;
+}
+
+.anterior:hover {
+  color: #a05151;
+}
+
+
+.anterior {
+  left: 10px;
+}
+
+.siguiente {
+  right: 10px;
+}
+
+.agregar-carrito-boton {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #c75353;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.agregar-carrito-boton:hover{
+background-color: #000000;
+}
+
+/*I C O N O S   D E    N A V E G A C I O N*/
+  
+nav{
+    text-align: center;
+    padding: .8rem;
+    background-color: #11517c31;
+    width: 100%;
+    height: 30px;
+    margin: 0;
+  }
+
+.nav-iconos {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  background-color: #000000;
+  padding: 1rem;
+  background-color: #000000;
+  width: 100%;
+  height: 50px;
+}
+
+.nav-iconos a {
+  position: relative;
+  color: rgb(252, 252, 252);
+  font-size: 35px;
+  text-decoration: none;
+}
+
+.nav-iconos a:hover {
+  color: #6b1225;
+}
+
+/* Tooltip personalizado */
+.tooltip {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #222;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.nav-iconos a:hover .tooltip {
+  opacity: 1;
+}
+
+/* e s t i l o     d e    s e l e c t o r    de    c a n t i d a d*/
+
+.cantidad-selector {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.cantidad-selector label{
+  font-family:'Elephant';color: #000000;
+}
+
+.cantidad-controles {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cantidad-controles button {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: #ffa5a5;
+  border: none;
+  border-radius: 5px;
+}
+
+.cantidad-controles input[type="number"] {
+  width: 60px;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+  font-family:'Elephant';color: #000000
+}

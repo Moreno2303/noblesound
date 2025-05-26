@@ -1,0 +1,85 @@
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  background: #9b9b9b;
+  color: #333;
+  margin: 0;
+}
+
+#ticket {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+#ticket h1{
+  font-family: 'Elephant';
+}
+button {
+  padding: 10px 20px;
+  margin-top: 1rem;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3 ease;
+}
+button:hover{
+background-color: rgb(44, 40, 40);
+}
+
+.boton-volver{
+  background-color: #c75353;
+  color: white;
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none; /*nota, quita el subrayado*/
+border-radius: 10px;
+font-weight: bold; /*hace tipo negritas, el texto*/
+transition: background-color 0.3 ease;
+}
+
+.boton-volver:hover{
+  background-color: #a03d3d;
+}
+
+
+footer{
+  font-family: 'Elephant';
+  font-size: 20px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+
+ #acciones {
+  text-align: center;
+  margin-top: 30px;
+}
+
+
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  #ticket {
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    page-break-inside: avoid;
+  }
+  #acciones {
+    display: none !important;
+    
+  }
+}

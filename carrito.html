@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carrito de Compras</title>
+  <link rel="stylesheet" href="car.css" />
+  <link rel="website icon" type="png" href="fotos/logons.png">
+  <style>
+    /* Solo un estilo rápido para mostrar/ocultar info-tarjeta */
+    #info-tarjeta { display: none; }
+    .vacio { font-style: italic; color: #777; }
+  </style>
+</head>
+<body>
+  <h1>NOBLE SOUND<br>AGRADECE TU COMPRA</h1>
+
+  <div class="carrito" id="carrito">
+    <!-- Productos se mostrarán aquí -->
+  </div>
+
+  <div class="total" id="total">
+    <!-- Total se mostrará aquí -->
+  </div>
+
+  <!-- Formulario para datos del usuario -->
+  <form id="formulario-compra">
+    <h2>Datos para el pedido</h2>
+
+    <label for="nombre">Nombre completo:</label><br />
+    <input type="text" id="nombre" name="nombre" required /><br /><br />
+
+    <label for="contacto">Número de contacto:</label><br />
+    <input type="tel" id="contacto" name="contacto" required /><br /><br />
+
+    <label for="direccion">Dirección:</label><br />
+    <textarea id="direccion" name="direccion" rows="3" required></textarea><br /><br />
+
+    <label for="metodoPago">Método de pago:</label><br />
+    <select id="metodoPago" name="metodoPago" required>
+      <option value="">--Selecciona--</option>
+      <option value="Efectivo">Efectivo</option>
+      <option value="Tarjeta">Tarjeta</option>
+      <option value="Transferencia">Transferencia</option>
+    </select><br /><br />
+
+    <div id="info-tarjeta">
+      <label for="numeroTarjeta">Número de tarjeta:</label><br />
+      <input type="text" id="numeroTarjeta" name="numeroTarjeta" maxlength="16" /><br /><br />
+
+      <label for="vencimientoTarjeta">Fecha de vencimiento:</label><br />
+      <input type="month" id="vencimientoTarjeta" name="vencimientoTarjeta" /><br /><br />
+
+      <label for="cvvTarjeta">CVV:</label><br />
+      <input type="text" id="cvvTarjeta" name="cvvTarjeta" maxlength="3" /><br /><br />
+    </div>
+
+    <button type="submit">Hacer Pedido</button>
+  </form>
+
+  <div class="botones">
+    <button type="button" onclick="vaciarCarrito()">Vaciar carrito</button>
+    <a href="index.html">Volver a la tienda</a>
+  </div>
+
+  <script>
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const contenedor = document.getElementById('carrito');
+    const totalContenedor = document.getElementById('total');
+    const formulario = document.getElementById('formulario-compra');
+    const metodoPago = document.getElementById('metodoPago');
+    const infoTarjeta = document.getElementById('info-tarjeta');
+
+    // Mostrar/ocultar campos de tarjeta según método de pago
+    metodoPago.addEventListener('change', () => {
+      if (metodoPago.value === 'Tarjeta') {
+        infoTarjeta.style.display = 'block';
+      } else {
+        infoTarjeta.style.display = 'none';
+      }
+    });
+
+    function mostrarCarrito() {
+      contenedor.innerHTML = '';
+      totalContenedor.innerHTML = '';
+
+      if (carrito.length === 0) {
+        contenedor.innerHTML = '<p class="vacio">Tu carrito está vacío.</p>';
+        return;
+      }
+
+      let total = 0;
+      let stockAgotado = false;
+
+      carrito.forEach((producto, index) => {
+        const cantidad = parseInt(producto.cantidad) || 1;
+        const disponibles = parseInt(producto.disponibles) || 0;
+
+        if (cantidad > disponibles) {
+          stockAgotado = true;
+        }
+
+        const subtotal = producto.precio * cantidad;
+        total += subtotal;
+
+        const item = document.createElement('div');
+        item.classList.add('producto');
+        item.innerHTML = `
+          <img src="${producto.imagen}" alt="${producto.nombre}">
+          <div>
+            <h3>${producto.nombre}</h3>
+            <p><strong>Color:</strong> ${producto.color}</p>
+            <p><strong>Precio:</strong> $${producto.precio.toFixed(2)}</p>
+            <p><strong>Cantidad:</strong> ${cantidad}</p>
+            <p><strong>Disponibles:</strong> ${disponibles}</p>
+            <p><strong>Subtotal:</strong> $${subtotal.toFixed(2)}</p>
+            <button class="eliminar-producto" onclick="eliminarProducto(${index})">Eliminar</button>
+          </div>
+        `;
+        contenedor.appendChild(item);
+      });
+
+      totalContenedor.innerHTML = `<h2>Total: $${total.toFixed(2)}</h2>`;
+
+      // Deshabilitar botón de submit si hay stock agotado
+      formulario.querySelector('button[type="submit"]').disabled = stockAgotado;
+      if (stockAgotado) {
+        formulario.querySelector('button[type="submit"]').title = "Hay productos que superan el stock disponible.";
+      } else {
+        formulario.querySelector('button[type="submit"]').title = "";
+      }
+    }
+
+    function vaciarCarrito() {
+      localStorage.removeItem('carrito');
+      carrito = [];
+      mostrarCarrito();
+    }
+
+    function eliminarProducto(index) {
+      carrito.splice(index, 1);
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      mostrarCarrito();
+    }
+
+    // Manejar el envío del formulario
+    formulario.addEventListener('submit', function (event) {
+      event.preventDefault(); // evitar recarga
+
+      if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+      }
+
+      let hayProblemas = carrito.some(producto => parseInt(producto.cantidad) > parseInt(producto.disponibles));
+      if (hayProblemas) {
+        alert("Uno o más productos superan el stock disponible.");
+        return;
+      }
+
+      // Validar datos
+      const nombre = document.getElementById('nombre').value.trim();
+      const contacto = document.getElementById('contacto').value.trim();
+      const direccion = document.getElementById('direccion').value.trim();
+      const metodoPagoValue = metodoPago.value;
+
+      if (!nombre || !contacto || !direccion || !metodoPagoValue) {
+        alert("Por favor, completa todos los campos del formulario.");
+        return;
+      }
+
+      // Si el método es tarjeta, validar los campos extra
+      if (metodoPagoValue === 'Tarjeta') {
+        const numeroTarjeta = document.getElementById('numeroTarjeta').value.trim();
+        const vencimientoTarjeta = document.getElementById('vencimientoTarjeta').value.trim();
+        const cvvTarjeta = document.getElementById('cvvTarjeta').value.trim();
+
+        if (!numeroTarjeta || !vencimientoTarjeta || !cvvTarjeta) {
+          alert("Por favor, completa todos los datos de la tarjeta.");
+          return;
+        }
+        // Opcional: valida formato numérico, longitud, etc.
+      }
+
+      // Crear resumen de compra con datos del cliente
+      const resumenCompra = {
+        productos: carrito,
+        fecha: new Date().toLocaleString(),
+        total: carrito.reduce((acc, producto) => acc + (producto.precio * producto.cantidad), 0),
+        cliente: {
+          nombre,
+          contacto,
+          direccion,
+          metodoPago: metodoPagoValue,
+        }
+      };
+
+      localStorage.setItem('ticket', JSON.stringify(resumenCompra));
+
+      // Actualizar stock en localStorage
+      let stockActual = JSON.parse(localStorage.getItem('stock')) || {};
+      carrito.forEach(producto => {
+        const key = `${producto.nombre}-${producto.color}`;
+        const cantidadComprada = parseInt(producto.cantidad);
+        if (!stockActual[key]) stockActual[key] = parseInt(producto.disponibles);
+        stockActual[key] -= cantidadComprada;
+      });
+      localStorage.setItem('stock', JSON.stringify(stockActual));
+
+      // Limpiar carrito y redirigir a ticket.html
+      localStorage.removeItem('carrito');
+      window.location.href = "ticket.html";
+    });
+
+    mostrarCarrito();
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+/* Estilos generales */
+body {
+  font-family: 'Oswald';
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  background-color: #858585;
+  color: #030303;
+}
+
+header {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  padding: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 300px;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+  border-radius: 8px; /* opcional: bordes redondeados */
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 2em;
+  text-align: center;
+  font-family: 'Elephant';
+}
+
+.header-text p {
+  margin: 0;
+  font-size: 1em;
+  font-family: 'Rockwell';
+}
+
+section {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.redes-sociales {
+  display: flex;
+  gap: 50px; /* Espacio entre íconos */
+  margin-top: 15px;
+  justify-content: center; /* Centrado horizontal */
+}
+
+.redes-sociales a {
+  color: #333;
+  font-size: 30px; /*tamaño de iconos*/
+  transition: transform 0.3s, color 0.3s;
+  text-decoration: none;
+}
+
+.redes-sociales a:hover {
+  color: #61ffdf; 
+  transform: scale(1.2); /* tamaño del icono al pasar el mouse */
+}
+
+.contactos a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.contactos a:hover {
+  text-decoration: underline;
+}
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  color: #333;
+  font-size: 40px;
+  text-decoration: none;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: max-content;
+  background-color: #8573737a;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: -110%; /* Muestra el tooltip encima o debajo del ícono */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+
+.instrucciones ol {
+  padding-left: 20px;
+  font-size: 1.1em;
+}
+
+footer {
+  background-color: #ddd;
+  text-align: center;
+  padding: 10px;
+  font-size: 0.9em;
+  margin-top: 30px;
+}
+
+.contactos p{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 120%;
+}
+
+.nav-iconos {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  background-color: #000000;
+  padding: 1rem;
+}
+.nav-iconos a {
+  position: relative;
+  color: white;
+  font-size: 30px;
+  text-decoration: none;
+  
+}
+
+.nav-iconos a:hover {
+  color: #e43737d0;
+}
+
+.nav-iconos .tooltip {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #222;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.nav-iconos a:hover .tooltip {
+  opacity: 1;
+}

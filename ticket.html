@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ticket de Compra</title>
+  <link rel="website icon" type="png" href="fotos/logons.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="ticket.css" />
+</head>
+<body>
+  <div id="ticket">
+    <h1>NOBLE SOUND</h1>
+    <h2>TICKET DE COMPRA</h2>
+    <p><strong>Orden ID:</strong> <span id="ordenId"></span></p>
+    <p><strong>Fecha:</strong> <span id="fecha"></span></p>
+
+    <!-- Información del cliente -->
+    <div id="infoCliente" style="margin-bottom: 20px;">
+      <h3>Datos del Cliente</h3>
+      <p><strong>Nombre:</strong> <span id="clienteNombre"></span></p>
+      <p><strong>Contacto:</strong> <span id="clienteContacto"></span></p>
+      <p><strong>Dirección:</strong> <span id="clienteDireccion"></span></p>
+      <p><strong>Método de Pago:</strong> <span id="clientePago"></span></p>
+    </div>
+
+    <div id="productos"></div>
+    <h2 id="total"></h2>
+  </div>
+  <div id="acciones">
+    <button onclick="window.print()">Descargar PDF</button>
+    <a href="index.html" class="boton-volver">Finalizar compra</a>
+    <button onclick="cerrarPagina()">Salir de la tienda</button>
+  </div>
+
+  <script>
+    const ticket = JSON.parse(localStorage.getItem('ticket'));
+    if (!ticket) {
+      document.body.innerHTML = '<h2>No hay ticket disponible.</h2>';
+    } else {
+      // Generar ID único con fecha y número aleatorio
+      const ordenId = 'NS-' + Date.now().toString().slice(-6) + '-' + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+      document.getElementById('ordenId').textContent = ordenId;
+
+      document.getElementById('fecha').textContent = ticket.fecha;
+
+      // Mostrar datos del cliente
+      if(ticket.cliente){
+        document.getElementById('clienteNombre').textContent = ticket.cliente.nombre || '-';
+        document.getElementById('clienteContacto').textContent = ticket.cliente.contacto || '-';
+        document.getElementById('clienteDireccion').textContent = ticket.cliente.direccion || '-';
+        document.getElementById('clientePago').textContent = ticket.cliente.metodoPago || '-';
+      }
+
+      const contenedor = document.getElementById('productos');
+      ticket.productos.forEach(p => {
+        const div = document.createElement('div');
+        div.style.borderBottom = "1px solid #ccc";
+        div.style.marginBottom = "10px";
+        div.innerHTML = `
+          <img src="${p.imagen}" alt="${p.nombre}" style="width: 120px; height: auto; margin-bottom: 10px;">
+          <p><strong>Producto:</strong> ${p.nombre}</p>
+          <p><strong>Color:</strong> ${p.color}</p>
+          <p><strong>Precio:</strong> $${p.precio.toFixed(2)}</p>
+          <p><strong>Cantidad:</strong> ${p.cantidad}</p>
+          <p><strong>Subtotal:</strong> $${(p.precio * p.cantidad).toFixed(2)}</p>
+        `;
+        contenedor.appendChild(div);
+      });
+
+      document.getElementById('total').textContent = `Total de la compra: $${ticket.total.toFixed(2)}`;
+    }
+
+    function cerrarPagina() {
+    window.close();
+    alert('Para salir, cierra esta pestaña o ventana manualmente.');
+  }
+  </script>
+</body>
+</html>
+
